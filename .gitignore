@@ -1,0 +1,5 @@
+vendor/
+logs/
+.env
+.vscode
+src/App/views/cache/

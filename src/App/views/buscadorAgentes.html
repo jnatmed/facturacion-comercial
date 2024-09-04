@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buscar Agentes{% endblock %}
+
+{% block body %}
+<h1>Buscar Agentes</h1>
+
+<form action="{{ path('buscar_agentes') }}" method="get">
+    <div class="form-group">
+        <label for="search">Buscar por Nombre, Apellido o Credencial:</label>
+        <input type="text" id="search" name="query" class="form-control" value="{{ query }}" placeholder="Ingrese nombre, apellido o credencial">
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+
+{% if agentes is not empty %}
+    <h2>Resultados de la búsqueda</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Credencial</th>
+                <th>Nombre y Apellido</th>
+                <th>Unidad</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agente in agentes %}
+                <tr>
+                    <td>{{ agente.credencial }}</td>
+                    <td>{{ agente.nombre }} {{ agente.apellido }}</td>
+                    <td>{{ agente.unidad.nombre_unidad }}</td>
+                    <td>
+                        <a href="{{ path('ver_facturas', { 'id': agente.id_agente }) }}" class="btn btn-info">Ver Facturas</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No se encontraron agentes.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}
